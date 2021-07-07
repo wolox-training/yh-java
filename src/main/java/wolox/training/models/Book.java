@@ -1,5 +1,6 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
 import java.util.List;
 import javax.persistence.Column;
@@ -68,6 +69,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
+        Preconditions.checkNotNull(author, "Illegal Argument, author is Null.");
         this.author = author;
     }
 
@@ -76,6 +78,7 @@ public class Book {
     }
 
     public void setImage(String image) {
+        Preconditions.checkNotNull(image, "Illegal Argument, image is Null.");
         this.image = image;
     }
 
@@ -84,6 +87,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
+        Preconditions.checkNotNull(title, "Illegal Argument, title is Null.");
         this.title = title;
     }
 
@@ -92,6 +96,7 @@ public class Book {
     }
 
     public void setSubtitle(String subtitle) {
+        Preconditions.checkNotNull(subtitle, "Illegal Argument, subtitle is Null.");
         this.subtitle = subtitle;
     }
 
@@ -100,6 +105,7 @@ public class Book {
     }
 
     public void setPublisher(String publisher) {
+        Preconditions.checkNotNull(publisher, "Illegal Argument, publisher is Null.");
         this.publisher = publisher;
     }
 
@@ -108,6 +114,7 @@ public class Book {
     }
 
     public void setYear(String year) {
+        Preconditions.checkNotNull(year, "Illegal Argument, year is Null.");
         this.year = year;
     }
 
@@ -117,6 +124,7 @@ public class Book {
 
     public void setPages(int pages) {
         this.pages = pages;
+        Preconditions.checkNotNull(pages, "Illegal Argument, pages is Null.");
     }
 
     public String getIsbn() {
@@ -124,6 +132,7 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
+        Preconditions.checkNotNull(isbn, "Illegal Argument, isbn is Null.");
         this.isbn = isbn;
     }
 }
