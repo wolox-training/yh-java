@@ -1,5 +1,6 @@
 package wolox.training.models;
 
+import io.swagger.annotations.ApiModel;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToMany;
  * Represents a Book
  */
 @Entity
+@ApiModel(description = "Books from the Training API")
 public class Book {
 
     @Id
