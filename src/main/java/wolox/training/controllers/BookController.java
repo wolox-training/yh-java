@@ -62,7 +62,7 @@ public class BookController {
             @ApiResponse(code = 200, message = "Successfully retrieved book"),
             @ApiResponse(code = 404, message = "Book Not Found")
     })
-    public Book findOne(@ApiParam(value = "id to find the book", required = true) @PathVariable Long id) {
+    public Book findById(@ApiParam(value = "id to find the book", required = true) @PathVariable Long id) {
         return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 
