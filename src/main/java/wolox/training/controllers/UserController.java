@@ -48,7 +48,7 @@ public class UserController {
      * @throws {@link UserNotFoundException} if the {@link User} with the given identifier does not exist
      */
     @GetMapping("/{id}")
-    public User findOne(@PathVariable Long id) {
+    public User findById(@PathVariable Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
