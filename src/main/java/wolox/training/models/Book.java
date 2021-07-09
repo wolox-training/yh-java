@@ -2,6 +2,7 @@ package wolox.training.models;
 
 import com.google.common.base.Preconditions;
 import io.swagger.annotations.ApiModel;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -115,6 +116,9 @@ public class Book {
 
     public void setYear(String year) {
         Preconditions.checkNotNull(year, "Illegal Argument, year is Null.");
+        int yearInt = Integer.parseInt(year);
+        Preconditions.checkArgument(yearInt <= LocalDate.now().getYear(), "Illegal Argument, year out of range.");
+        Preconditions.checkArgument(yearInt > 0, "Illegal Argument, year is negative.");
         this.year = year;
     }
 
@@ -123,8 +127,9 @@ public class Book {
     }
 
     public void setPages(int pages) {
-        this.pages = pages;
         Preconditions.checkNotNull(pages, "Illegal Argument, pages is Null.");
+        Preconditions.checkArgument(pages > 0, "Illegal Argument, pages is negative.");
+        this.pages = pages;
     }
 
     public String getIsbn() {
