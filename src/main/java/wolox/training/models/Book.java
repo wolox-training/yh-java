@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Represents an Book
+ */
 @Entity
 public class Book {
 
@@ -28,6 +31,9 @@ public class Book {
     private String year;
     @Column(nullable = false)
     private int pages;
+    /**
+     * International Standard Book Number
+     */
     @Column(nullable = false)
     private String isbn;
 
