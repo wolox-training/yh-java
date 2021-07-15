@@ -1,5 +1,6 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -55,6 +56,7 @@ public class User {
     }
 
     public void setUsername(String username) {
+        Preconditions.checkNotNull(username, "Illegal Argument, username is Null.");
         this.username = username;
     }
 
@@ -63,6 +65,7 @@ public class User {
     }
 
     public void setName(String name) {
+        Preconditions.checkNotNull(name, "Illegal Argument, name is Null.");
         this.name = name;
     }
 
@@ -71,6 +74,7 @@ public class User {
     }
 
     public void setBirthday(LocalDate birthday) {
+        Preconditions.checkNotNull(birthday, "Illegal Argument, birthday is Null.");
         this.birthday = birthday;
     }
 
@@ -79,6 +83,7 @@ public class User {
     }
 
     public void setBooks(List<Book> books) {
+        Preconditions.checkNotNull(books, "Illegal Argument, books is Null.");
         this.books = books;
     }
 
