@@ -1,5 +1,7 @@
 package wolox.training.repositories;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import wolox.training.models.User;
@@ -7,4 +9,5 @@ import wolox.training.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     public Optional<User> findFirstByName(String name);
+    public List<User> findByBirthdayBetweenAndNameContainingIgnoreCase(LocalDate startDate, LocalDate endDate, String name);
 }

@@ -1,12 +1,15 @@
 package wolox.training.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import wolox.training.dto.BookDto;
 import wolox.training.exceptions.BookIdMismatchException;
 import wolox.training.exceptions.BookNotFoundException;
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
+import wolox.training.service.OpenLibraryService;
+import wolox.training.util.BookUtil;
 
 /**
  * This class attends rest requests for book management
@@ -33,6 +39,9 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private OpenLibraryService openLibraryService;
 
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name,
@@ -104,5 +113,22 @@ public class BookController {
         }
         bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
         return bookRepository.save(book);
+    }
+
+    /**
+     * This method find a {@link Book} by its isbn
+     * @param isbn: {@link Book} ISBN
+     * @return Found {@link Book}
+     * @throws JsonProcessingException
+     */
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<Book> findByIsbn(@PathVariable String isbn) throws JsonProcessingException {
+        Optional<Book> bookOptional = bookRepository.findFirstByIsbn(isbn);
+        if(bookOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(bookOptional.get());
+        }
+        BookDto bookDto = openLibraryService.bookInfo(isbn).orElseThrow(BookNotFoundException::new);
+        Book bookSaved = bookRepository.save(BookUtil.dtoToEntity(bookDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookSaved);
     }
 }
