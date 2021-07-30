@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,12 +52,22 @@ public class BookController {
     }
 
     /**
-     * This method gets all the saved {@link Book}s
-     * @return saved {@link Book}s
+     * This method gets all the saved {@link Book}s iltered by query parameters
+     * @param allRequestParams: {@link Book} query parameters
+     * @return saved {@link Book}s filtered by query parameters
      */
     @GetMapping
-    public Iterable findAll() {
-        return bookRepository.findAll();
+    public Iterable findAll(@RequestParam Map<String,String> allRequestParams) {
+        String genre = allRequestParams.get("genre");
+        String author = allRequestParams.get("author");
+        String image = allRequestParams.get("image");
+        String title = allRequestParams.get("title");
+        String subtitle = allRequestParams.get("subtitle");
+        String publisher = allRequestParams.get("publisher");
+        String year = allRequestParams.get("year");
+        String pagesString = allRequestParams.get("pages");
+        Integer pages = pagesString == null || pagesString.trim().isEmpty() ? null : Integer.parseInt(pagesString);
+        return bookRepository.findByFilters(genre, author, image, title, subtitle, publisher, year, pages);
     }
 
     /**
