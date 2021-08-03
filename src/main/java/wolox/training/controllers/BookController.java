@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -57,7 +58,7 @@ public class BookController {
      * @return saved {@link Book}s filtered by query parameters
      */
     @GetMapping
-    public Iterable findAll(@RequestParam Map<String,String> allRequestParams) {
+    public Iterable findAll(@RequestParam Map<String,String> allRequestParams, Pageable pageable) {
         String genre = allRequestParams.get("genre");
         String author = allRequestParams.get("author");
         String image = allRequestParams.get("image");
@@ -67,7 +68,7 @@ public class BookController {
         String year = allRequestParams.get("year");
         String pagesString = allRequestParams.get("pages");
         Integer pages = pagesString == null || pagesString.trim().isEmpty() ? null : Integer.parseInt(pagesString);
-        return bookRepository.findByFilters(genre, author, image, title, subtitle, publisher, year, pages);
+        return bookRepository.findByFilters(genre, author, image, title, subtitle, publisher, year, pages, pageable);
     }
 
     /**
